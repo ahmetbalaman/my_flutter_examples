@@ -57,14 +57,14 @@ class _PageControllerWidgetState extends State<PageControllerWidget> {
               case 0:
                 if (controller.page != 0) {
                   controller.previousPage(
-                      duration: Duration(milliseconds: 100),
+                      duration: const Duration(milliseconds: 100),
                       curve: Curves.easeIn);
                 }
                 break;
               case 1:
                 if (controller.page != 1) {
                   controller.nextPage(
-                      duration: Duration(milliseconds: 100),
+                      duration: const Duration(milliseconds: 100),
                       curve: Curves.easeIn);
                 }
                 break;

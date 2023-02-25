@@ -31,7 +31,7 @@ class _ColorViewPageState extends State<ColorViewPage> {
                 secilenRenk = Colors.pink;
                 setState(() {});
               },
-              icon: Icon(Icons.cancel))
+              icon: const Icon(Icons.cancel))
         ],
       ),
       body: Column(

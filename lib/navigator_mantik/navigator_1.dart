@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_derslerim/navigator_mantik/navigator_1.1.dart';
 import 'package:flutter_derslerim/navigator_mantik/navigator_2.dart';
 
 class NavigatorPageOne extends StatefulWidget {
@@ -10,13 +13,24 @@ class NavigatorPageOne extends StatefulWidget {
 
 class _NavigatorPageOneState extends State<NavigatorPageOne>
     with NavigatorService {
-  List<String> veriable = ["one", "two", "three"];
   Color colorChoice = Colors.red;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("State One"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                normalNavigator(context, const NavigatorPageOnePointOne());
+              },
+              child: const FittedBox(
+                  child: Text(
+                "Better Version is here!",
+                style: TextStyle(color: Colors.black),
+              )))
+        ],
+        centerTitle: false,
+        title: const Text("State One"),
       ),
       body: Column(
         children: [
@@ -34,20 +48,20 @@ class _NavigatorPageOneState extends State<NavigatorPageOne>
                 //a normal navigator widget
                 //normalNavigator(context, NavigatorPageOne());
 
-                final response =
-                    await advancedNavigator<bool>(context, NavigatorPageTwo());
+                final response = await advancedNavigator<bool>(
+                    context, const NavigatorPageTwo());
                 if (response == true) {
-                  print("you god damn right");
+                  log("you god damn right");
                   colorChoice = Colors.green;
                   setState(() {});
                 } else {
-                  print("You God Damn Wrong");
+                  log("You God Damn Wrong");
                   setState(() {
                     colorChoice = Colors.red;
                   });
                 }
               },
-              child: Text("Tap me"))
+              child: const Text("Tap me"))
         ],
       ),
     );
@@ -69,6 +83,6 @@ mixin NavigatorService {
           return widget;
         },
         fullscreenDialog: true,
-        settings: RouteSettings()));
+        settings: const RouteSettings()));
   }
 }

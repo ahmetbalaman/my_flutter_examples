@@ -12,7 +12,7 @@ class _NavigatorPageTwoState extends State<NavigatorPageTwo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Page Two"),
+        title: const Text("Page Two"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
