@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_derslerim/navigator_mantik/navigator_1.dart';
 import 'package:flutter_derslerim/page_controller/page_controller.dart';
+import 'package:flutter_derslerim/starting_services/service_learn_get.dart';
+import 'package:flutter_derslerim/starting_services/service_learn_post.dart';
 import 'package:flutter_derslerim/tab_bars/tab_view.dart';
 
 import 'life_cycle/color_life_cycle/color_life_cylc_choose.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TabBarViewWidget(),
+      home: ServiceLearnPostView(),
     );
   }
 }
