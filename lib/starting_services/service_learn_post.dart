@@ -1,8 +1,6 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_derslerim/starting_services/post_model.dart';
+import 'package:flutter_derslerim/starting_services/post_services.dart';
 
 class ServiceLearnPostView extends StatefulWidget {
   const ServiceLearnPostView({super.key});
@@ -12,15 +10,14 @@ class ServiceLearnPostView extends StatefulWidget {
 }
 
 class _ServiceLearnPostViewState extends State<ServiceLearnPostView> {
+  late final PostModelServices servis;
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
-  late final Dio _dioManager;
   bool? isComplete;
-  final _baseUrl = 'https://jsonplaceholder.typicode.com/';
   @override
   void initState() {
     super.initState();
-    _dioManager = Dio(BaseOptions(baseUrl: _baseUrl));
+    servis = PostModelServices();
   }
 
   void changeLoading() {
@@ -29,14 +26,15 @@ class _ServiceLearnPostViewState extends State<ServiceLearnPostView> {
     });
   }
 
-  Future<void> addItem(PostModel model) async {
+  Future<void> _addItem(PostModel item) async {
     changeLoading();
-    final response = await _dioManager.post("posts", data: model);
-
-    if (response.statusCode == HttpStatus.created) {
-      setState(() {
-        isComplete = true;
-      });
+    bool response = await servis.addItem(item) as bool;
+    if (response) {
+      isComplete = true;
+      setState(() {});
+    } else {
+      isComplete = false;
+      setState(() {});
     }
     changeLoading();
   }
@@ -83,19 +81,39 @@ class _ServiceLearnPostViewState extends State<ServiceLearnPostView> {
                   keyboardType: TextInputType.text,
                   validator: (value) => valueControl(value),
                 ),
-                TextButton(
-                    onPressed: isLoading
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              PostModel item = PostModel(
-                                  title: _titleController.text,
-                                  body: _bodyController.text,
-                                  userId: int.tryParse(_userIdController.text));
-                              addItem(item);
-                            } else {}
-                          },
-                    child: const Text("Post")),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  PostModel item = PostModel(
+                                      title: _titleController.text,
+                                      body: _bodyController.text,
+                                      userId:
+                                          int.tryParse(_userIdController.text));
+                                  _addItem(item);
+                                } else {}
+                              },
+                        child: const Text("Post")),
+                    TextButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  PostModel item = PostModel(
+                                      title: _titleController.text,
+                                      body: _bodyController.text,
+                                      userId:
+                                          int.tryParse(_userIdController.text));
+                                  _addItem(item);
+                                } else {}
+                              },
+                        child: const Text("Update")),
+                  ],
+                )
               ],
             )));
   }
@@ -105,4 +123,5 @@ String? valueControl(value) {
   if (value == null || value.isEmpty) {
     return "Wrong";
   }
+  return null;
 }

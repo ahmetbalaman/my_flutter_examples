@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_derslerim/starting_services/comments_view.dart';
 import 'package:flutter_derslerim/starting_services/post_model.dart';
+import 'package:flutter_derslerim/starting_services/post_services.dart';
 
 class ServiceLearnView extends StatefulWidget {
   const ServiceLearnView({super.key});
@@ -15,12 +17,14 @@ class _ServiceLearnViewState extends State<ServiceLearnView> {
   List<PostModel>? _items;
   bool isLoading = false;
   late final Dio _dioManager;
+  late final PostModelServices _service;
   final _baseUrl = 'https://jsonplaceholder.typicode.com/';
   @override
   void initState() {
     super.initState();
     _dioManager = Dio(BaseOptions(baseUrl: _baseUrl));
     fetchPostItems();
+    _service = PostModelServices();
   }
 
   void changeLoading() {
@@ -43,6 +47,12 @@ class _ServiceLearnViewState extends State<ServiceLearnView> {
     changeLoading();
   }
 
+  Future<void> fetchPostAdvancedItems() async {
+    changeLoading();
+    _items = await _service.fetchPostItems();
+    changeLoading();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +64,16 @@ class _ServiceLearnViewState extends State<ServiceLearnView> {
               : const SizedBox.shrink()
         ],
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        itemBuilder: (context, index) {
-          PostModel? item = _items?[index];
-          return PostCard(item: item);
-        },
-        itemCount: _items?.length ?? 0,
-      ),
+      body: _items == null
+          ? SizedBox()
+          : ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              itemBuilder: (context, index) {
+                PostModel? item = _items?[index];
+                return PostCard(item: item);
+              },
+              itemCount: _items?.length ?? 0,
+            ),
     );
   }
 }
@@ -80,6 +92,11 @@ class PostCard extends StatelessWidget {
       color: Colors.grey,
       margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CommentViewLearn(postId: item?.id),
+          ));
+        },
         title: Text(item?.title ?? ''),
         subtitle: Text(item?.body ?? ''),
       ),
