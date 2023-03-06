@@ -28,6 +28,7 @@ class _ServiceLearnPostViewState extends State<ServiceLearnPostView> {
 
   Future<void> _addItem(PostModel item) async {
     changeLoading();
+    // ignore: unnecessary_cast
     bool response = await servis.addItem(item) as bool;
     if (response) {
       isComplete = true;
