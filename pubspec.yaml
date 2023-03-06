@@ -31,7 +31,6 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.0.1
-  docx_template: ^0.3.3
   http:
   flutter:
     sdk: flutter
