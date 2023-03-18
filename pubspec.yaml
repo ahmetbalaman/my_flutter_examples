@@ -32,8 +32,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.0.1
   http:
+  html:
+  docx_template:
   flutter:
     sdk: flutter
+dependency_overrides:
+  archive: 3.3.0
 
 dev_dependencies:
 
