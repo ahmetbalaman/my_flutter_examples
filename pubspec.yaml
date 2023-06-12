@@ -35,6 +35,7 @@ dependencies:
   html:
   docx_template:
   hive_flutter:
+  get:
   flutter:
     sdk: flutter
 dependency_overrides:

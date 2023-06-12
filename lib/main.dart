@@ -3,7 +3,9 @@ import 'package:flutter_derslerim/navigator_mantik/navigator_1.dart';
 import 'package:flutter_derslerim/page_controller/page_controller.dart';
 import 'package:flutter_derslerim/starting_services/service_learn_get.dart';
 import 'package:flutter_derslerim/starting_services/service_learn_post.dart';
+import 'package:flutter_derslerim/state_managment_giris/getx_giris.dart';
 import 'package:flutter_derslerim/tab_bars/tab_view.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'abubekir_odev/http_json_parcalama.dart';
 import 'abubekir_odev/http_site_parcalama.dart';
@@ -19,12 +21,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HttpParseSiteMethod(),
+      home: GetxGiris(),
     );
   }
 }
